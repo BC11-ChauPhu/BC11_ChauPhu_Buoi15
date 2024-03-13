@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC11_Châu_Phú</title>
+
+    <style>
+        .row1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 30px;
+        }
+
+        .row2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 30px;
+        }
+
+        .input {
+            transition: .5s;
+        }
+
+        .disabled {
+            display: none;
+        }
+        
+        .active {
+            display: block;
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container mb-5">
+        <form>
+            <h2 class="text-center">QUẢN LÝ TUYỂN SINH</h2>
+            <div class="form-group">
+                <label for="inputDiemChuan">Điểm chuẩn của hội đồng:</label>
+                <input type="number" class="form-control" id="inputDiemChuan" aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group">
+                <label for="inputDiemTongKet">Điểm tổng kết 3 môn:</label>
+                <input type="number" class="form-control" id="inputDiemTongKet" aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group">
+                <label for="khuVuc">Khu vực ưu tiên:</label>
+                <select class="form-control" id="khuVuc">
+                    <option>Chọn khu vực ưu tiên</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="doiTuong">Đối tượng ưu tiên:</label>
+                <select class="form-control" id="doiTuong">
+                    <option>Chọn đối tượng ưu tiên</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+
+            <button id="calcTuyenSinh" type="button" class="btn btn-success mb-3">Xem kết quả</button>
+
+            <div id="resultQLSV" class="alert alert-primary" role="alert">
+                Kết quả:
+                <br>
+                Tổng điểm:
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="container mb-5">
+        <form>
+            <h2 class="text-center">TÍNH TIỀN ĐIỆN</h2>
+            <div class="form-group">
+                <label>Tên:</label>
+                <input type="text" class="form-control" id="tenTienDien">
+            </div>
+
+            <div class="form-group">
+                <label>Số Kw:</label>
+                <input type="number" class="form-control" id="soKw">
+            </div>
+
+            <button id="calcTienDien" type="button" class="btn btn-success mb-3">Tính</button>
+
+            <div id="resultTienDien" class="alert alert-primary" role="alert">
+                Tiền điện:
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="container mb-5">
+        <form>
+            <h2 class="text-center">TÍNH THUẾ THU NHẬP CÁ NHÂN</h2>
+            <div class="form-group">
+                <label>Họ tên:</label>
+                <input type="text" class="form-control" id="tenThue">
+            </div>
+
+            <div class="form-group">
+                <label>Tổng thu nhập năm:</label>
+                <input type="number" class="form-control" id="tongThuNhap">
+            </div>
+
+            <div class="form-group">
+                <label">Số người phụ thuộc:</label>
+                <input type="number" class="form-control" id="phuThuoc">
+            </div>
+
+            <button id="calcTienThue" type="button" class="btn btn-success mb-3">Tính</button>
+
+            <div id="resultTienThue" class="alert alert-primary" role="alert">
+                Tiền thuế phải trả:
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="container mb-5">
+        <form>
+            <h2 class="text-center">TÍNH TIỀN CÁP</h2>
+            <div class="form-group">
+                <label>Mã khách hàng:</label>
+                <input type="text" class="form-control" id="customerSerial">
+            </div>
+
+            <div class="form-group">
+                <label>Loại khách hàng</label>
+                <select onchange="showPreConnections()" class="form-control" id="customerType">
+                    <option>Chọn loại khách hàng</option>
+                    <option value="personal">Nhà dân</option>
+                    <option id="classBussiness" value="business">Doanh nghiệp</option>
+                </select>
+            </div>
+
+
+            <div class="connections form-group disabled">
+                <label">Số kết nối:</label>
+                <input type="number" class="form-control" id="connectionNum">
+            </div>
+
+            <div class="form-group">
+                <label">Số kênh cao cấp:</label>
+                <input type="number" class="form-control" id="premiumConnectionNum">
+            </div>
+
+            <button id="calcSubcribe" type="button" class="btn btn-success mb-3">Tính</button>
+
+            <div id="resultSubcribe" class="alert alert-primary" role="alert">
+                Tiền cáp phải trả:
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+    <script src="./js/main.js"></script>
+
+</body>
+
+</html>
